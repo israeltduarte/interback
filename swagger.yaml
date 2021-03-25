@@ -1,0 +1,578 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Challenge Banco Inter REST API
+  description: Microservice to manage customers, single digit calculations, swagger preview, unit tests, data encrypting, caching and more
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /customers:
+    get:
+      summary: get all customers info
+      description: get all customers data as pages
+      tags:
+        - customer-controller
+      operationId: getCustomers
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageCustomer'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+    post:
+      summary: add customer info
+      description: register a specified customer according to the info sent
+      tags:
+        - customer-controller
+      operationId: addCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: CREATED
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+  /customers/{idCustomer}:
+    get:
+      summary: get customer info
+      description: get customer info according to the given customer id
+      tags:
+        - customer-controller
+      operationId: getCustomer
+      parameters:
+        - name: idCustomer
+          example: 1
+          description: customer id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        "404":
+          description: NOT FOUND
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ""
+    put:
+      summary: update customer info
+      description: update info of a customer according to the given customer id
+      tags:
+        - customer-controller
+      operationId: updateCustomer
+      parameters:
+        - name: idCustomer
+          example: 1
+          description: customer id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        "404":
+          description: NOT FOUND
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        "405":
+          description: METHOD NOT ALLOWED
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+    delete:
+      summary: delete customer info
+      description: delete all info and entries about a customer according to the given customer id
+      tags:
+        - customer-controller
+      operationId: deleteCustomer
+      parameters:
+        - name: idCustomer
+          description: customer id
+          in: path
+          required: true
+          example: 1
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: "Customer deleted: Gabrielle Almeida"
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ""
+        "404":
+          description: NOT FOUND
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+  /customers/{idCustomer}/calculations:
+    get:
+      summary: get customer calculations
+      description: get paged all customers calculations refered to a specific customer id
+      tags:
+        - customer-controller
+      operationId: getCustomerCalculations
+      parameters:
+        - name: idCustomer
+          description: customer id
+          example: 1
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageSingleDigitDTO'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+  /customers/{idCustomer}/encrypt:
+    put:
+      summary: encrypt info of a customer
+      description: update fields name and email from a customer according to the given customer id
+      tags:
+        - customer-controller
+      operationId: encryptCustomer
+      parameters:
+        - name: idCustomer
+          description: customer id
+          example: 1
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicKeyRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+  /calculations:
+    get:
+      summary: get all calculations info
+      description: get paged all calculation info just like registered into the database
+      tags:
+        - calculation-controller
+      operationId: getCalculations
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageSingleDigit'
+    post:
+      summary: add calculation info
+      description: register a calculation into the database related to a customer or not'
+      tags:
+        - calculation-controller
+      operationId: addCalculation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleDigitRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: CREATED
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+                example: 3
+        "404":
+          description: NOT FOUND
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        "400":
+          description: BAD REQUEST
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: ''
+components:
+  schemas:
+    CustomerRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Gabrielle Almeida"
+        email:
+          type: string
+          example: "gabriellerar@gmail.com"
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Gabrielle Almeida"
+        email:
+          type: string
+          example: "gabriellerar@gmail.com"
+        singleDigits:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleDigit'
+    CustomerDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Gabrielle Almeida"
+        email:
+          type: string
+          example: "gabriellerar@gmail.com"
+        singleDigits:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleDigit'
+        publicKey:
+          type: string
+          example: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzzSTq2Q8PVoltLcsvceU3louHRgxOKEAj6VTQkprIZC0DCRIthz6pJ6KJMUAIaRPdAhWC0BMxtcEOauZsd9W64YCgeKd2d3vlIgQ9Q/LtE1/mj8c2/18MniHt+qORU1whGfE7qzHe/flXjIx/99UaqM1HrHJgSwjZuRziDaQvBS/HIPotiogZJN8jh77Yv8o/gOmTo5LDEe0/O0JqigohFT9rZ+GkSr60k2TnCLtrKCEsHewXD9kHesTxOPVFvxeZwe/+O9ltB5ICZeH5uA0T/MGbuXI+ewsiokhRDQhcfmiBIDWCO82K/8giFU7BSTN/ao/H6/r4cgqu7fZTFtEiwIDAQxx
+    PublicKeyRequestDTO:
+      type: object
+      properties:
+        publicKey:
+          type: string
+          example: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzzSTq2Q8PVoltLcsvceU3louHRgxOKEAj6VTQkprIZC0DCRIthz6pJ6KJMUAIaRPdAhWC0BMxtcEOauZsd9W64YCgeKd2d3vlIgQ9Q/LtE1/mj8c2/18MniHt+qORU1whGfE7qzHe/flXjIx/99UaqM1HrHJgSwjZuRziDaQvBS/HIPotiogZJN8jh77Yv8o/gOmTo5LDEe0/O0JqigohFT9rZ+GkSr60k2TnCLtrKCEsHewXD9kHesTxOPVFvxeZwe/+O9ltB5ICZeH5uA0T/MGbuXI+ewsiokhRDQhcfmiBIDWCO82K/8giFU7BSTN/ao/H6/r4cgqu7fZTFtEiwIDAQxx
+    SingleDigit:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        number:
+          type: string
+          example: 123
+        multiplier:
+          type: integer
+          format: int32
+          example: 2
+        concatenated:
+          type: string
+          example: 123123
+        result:
+          type: integer
+          format: int32
+          example: 3
+        createdAt:
+          type: string
+          format: date-time
+          example: 2021-03-16T17:15:03.837
+    SingleDigitRequestDTO:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int32
+          example: 1
+        number:
+          type: string
+          example: 12
+        multiplier:
+          type: integer
+          format: int32
+          example: 4
+    SingleDigitDTO:
+      type: object
+      properties:
+        number:
+          type: string
+          example: 123
+        multiplier:
+          type: integer
+          format: int32
+          example: 2
+        concatenated:
+          type: string
+          example: 123123
+        result:
+          type: integer
+          format: int32
+          example: 3
+        createdAt:
+          type: string
+          format: date-time
+          example: 2021-03-16T17:15:03.837
+    Pageable:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+          example: 0
+        sort:
+          $ref: '#/components/schemas/Sort'
+        paged:
+          type: boolean
+          example: true
+        unpaged:
+          type: boolean
+          example: false
+        pageSize:
+          type: integer
+          format: int32
+          example: 10
+        pageNumber:
+          type: integer
+          format: int32
+          example: 0
+    Sort:
+      type: object
+      properties:
+        unsorted:
+          type: boolean
+          example: false
+        sorted:
+          type: boolean
+          example: true
+        empty:
+          type: boolean
+          example: false
+    PageCustomer:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          example: 1
+        totalElements:
+          type: integer
+          format: int64
+          example: 1
+        number:
+          type: integer
+          format: int32
+          example: 0
+        size:
+          type: integer
+          format: int32
+          example: 10
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+          example: true
+        last:
+          type: boolean
+          example: true
+        numberOfElements:
+          type: integer
+          format: int32
+          example: 1
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        empty:
+          type: boolean
+          example: false
+    PageSingleDigitDTO:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          example: 1
+        totalElements:
+          type: integer
+          format: int64
+          example: 1
+        number:
+          type: integer
+          format: int32
+          example: 0
+        size:
+          type: integer
+          format: int32
+          example: 10
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleDigitDTO'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+          example: true
+        last:
+          type: boolean
+          example: false
+        numberOfElements:
+          type: integer
+          format: int32
+          example: 1
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        empty:
+          type: boolean
+          example: false
+    PageSingleDigit:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+          example: 1
+        totalElements:
+          type: integer
+          format: int64
+          example: 1
+        number:
+          type: integer
+          format: int32
+          example: 0
+        size:
+          type: integer
+          format: int32
+          example: 10
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleDigit'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+          example: true
+        last:
+          type: boolean
+          example: true
+        numberOfElements:
+          type: integer
+          format: int32
+          example: 1
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        empty:
+          type: boolean
+          example: false
+    CustomErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          example: 404
+        error:
+          type: string
+          example: Customer hasn't been found
+        owner:
+          type: string
+          example: ISRAEL TERRA DUARTE

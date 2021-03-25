@@ -1,0 +1,768 @@
+{
+  "info": {
+    "_postman_id": "8b4ba7e2-ab8f-4d0d-9061-7cb3fbd74ef3",
+    "name": "interback",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "getCustomers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCustomer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 201\"] = responseCode.code === 201;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Lilian Terra\",\r\n    \"email\": \"lilian.terra@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCustomerBadRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 400\"] = responseCode.code === 400;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"\",\r\n    \"email\": \"lilian.terra@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerCustomerNotFound",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 404\"] = responseCode.code === 404;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerBadRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 400\"] = responseCode.code === 400;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "asd"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCustomer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Gabrielle Almeida\",\r\n    \"email\": \"gabrielle.almeida@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCustomerCustomerNotFound",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 404\"] = responseCode.code === 404;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Gabrielle Almeida\",\r\n    \"email\": \"gabrielle.almeida@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCustomer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}/:id",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerCalculations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{customers}}/:id/{{calculations}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id",
+                "{{calculations}}"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "encryptCustomerDataCustomerNotFound",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 404\"] = responseCode.code === 404;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"publicKey\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp+qk6TpL6UF+LwPVMlcvTnAXKc1qwGgjEWt9tkNYdmEzdAexE+2IDSN0vF+TSvG04V+WmznhOkIzzA6424VirSjIWUneGdyINdtHfdGktpPavbWIF3u3j96t9QxxZMFMhqzdmDI4G74YghQcZcsI4Dyd20e7uLIKLvuxwjK4ijMZFuZ4w7EVsRceYxsgZshCKxdGkwxEjGQmi4zq3ZInvgdUZmDevDiMIZgPc9VYUav1Fwl1eEOJ7keync/U3Q0Eb+0pKOlOGK1NrE7ENTwgtfWs98tyl3M9MPijaGxLJRlA9d6Pjoh/ILRse5bp4zvyvO2kKjFBkzASeAhEyrVsTwIDAQAB\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id/{{encrypt}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id",
+                "{{encrypt}}"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "encryptCustomerDataWrongPublicKey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 400\"] = responseCode.code === 400;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"publicKey\": \"xxx\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id/{{encrypt}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id",
+                "{{encrypt}}"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "encryptCustomerData",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"publicKey\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg1OwkHEH252vDhssWBlu2ETMRgQG05px/xVdO8c5ELdy5BKZ6ZQRPAUGNenwpi3Lmm32F7j2CvMf0jVWYHUf8GGiOBzlMGt169ls2rORV+NJjGlGxgQ5t4mUh9YIuHBtDidFUGJAtaJs065rpP1CDJ/kpJ1lCr9dRhIiptHS2ULQzz9wVQFR/BbjBe0vCq7OBLeGeXIyK9GnJRreSgW4LcgJL6VVGYOBwRYSQGCP0lLwLiWZfVbQflGNCfzGBuEi+RxuaD4w6GIOpN+SghBPPpBbtrEPMLwYy0ndJBesNakgWozTGW1GgVB5KKo3qK02LBo30bNMIaDClEDNkV1YYQIDAQAB\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id/{{encrypt}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id",
+                "{{encrypt}}"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "encryptCustomerDataAlreadyEncrypted",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 400\"] = responseCode.code === 400;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"publicKey\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp+qk6TpL6UF+LwPVMlcvTnAXKc1qwGgjEWt9tkNYdmEzdAexE+2IDSN0vF+TSvG04V+WmznhOkIzzA6424VirSjIWUneGdyINdtHfdGktpPavbWIF3u3j96t9QxxZMFMhqzdmDI4G74YghQcZcsI4Dyd20e7uLIKLvuxwjK4ijMZFuZ4w7EVsRceYxsgZshCKxdGkwxEjGQmi4zq3ZInvgdUZmDevDiMIZgPc9VYUav1Fwl1eEOJ7keync/U3Q0Eb+0pKOlOGK1NrE7ENTwgtfWs98tyl3M9MPijaGxLJRlA9d6Pjoh/ILRse5bp4zvyvO2kKjFBkzASeAhEyrVsTwIDAQAB\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{customers}}/:id/{{encrypt}}",
+              "host": [
+                "{{base}}{{customers}}"
+              ],
+              "path": [
+                ":id",
+                "{{encrypt}}"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Calculation",
+      "item": [
+        {
+          "name": "getCalculations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 200\"] = responseCode.code === 200;\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}{{calculations}}",
+              "host": [
+                "{{base}}{{calculations}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCalculation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 201\"] = responseCode.code === 201;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerId\": 1,\r\n    \"number\": \"123\",\r\n    \"multiplier\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{calculations}}",
+              "host": [
+                "{{base}}{{calculations}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCalculationWithoutCustomerId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 201\"] = responseCode.code === 201;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"number\": \"123\",\r\n    \"multiplier\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{calculations}}",
+              "host": [
+                "{{base}}{{calculations}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCalculationCustomerNotFound",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 404\"] = responseCode.code === 404;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerId\": 123,\r\n    \"number\": \"123\",\r\n    \"multiplier\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{calculations}}",
+              "host": [
+                "{{base}}{{calculations}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addCalculationBadRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "tests[\"Status code 400\"] = responseCode.code === 400;"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"customerId\": 1,\r\n    \"number\": \"123\",\r\n    \"multiplier\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}{{calculations}}",
+              "host": [
+                "{{base}}{{calculations}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base",
+      "value": "localhost:8080"
+    },
+    {
+      "key": "customers",
+      "value": "/customers"
+    },
+    {
+      "key": "calculations",
+      "value": "/calculations"
+    },
+    {
+      "key": "encrypt",
+      "value": "/encrypt"
+    }
+  ]
+}
