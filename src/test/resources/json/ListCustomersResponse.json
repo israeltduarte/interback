@@ -1,0 +1,50 @@
+{
+  "content": [
+    {
+      "id": 2,
+      "name": "Gabrielle Almeida",
+      "email": "gabrielle.almeida@gmail.com",
+      "singleDigits": []
+    },
+    {
+      "id": 1,
+      "name": "Lilian Terra",
+      "email": "lilian.terra@gmail.com",
+      "singleDigits": [
+        {
+          "id": 1,
+          "number": "12",
+          "multiplier": 2,
+          "concatenated": "1212",
+          "result": 6,
+          "createdAt": "2021-12-20T15:00:00"
+        }
+      ]
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "pageSize": 10,
+    "pageNumber": 0,
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 2,
+  "totalPages": 1,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": true,
+  "numberOfElements": 2,
+  "size": 10,
+  "number": 0,
+  "empty": false
+}

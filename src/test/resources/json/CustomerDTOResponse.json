@@ -1,0 +1,14 @@
+{
+  "name": "Lilian Terra",
+  "email": "lilian.terra@gmail.com",
+  "singleDigits": [
+    {
+      "id": 1,
+      "number": "12",
+      "multiplier": 2,
+      "concatenated": "1212",
+      "result": 6,
+      "createdAt": "2021-12-20T15:00:00"
+    }
+  ]
+}

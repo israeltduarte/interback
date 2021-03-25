@@ -1,0 +1,5 @@
+{
+  "status": 400,
+  "error": "Email must be unique",
+  "owner": "ISRAEL DUARTE"
+}
